@@ -1,7 +1,7 @@
 variable "region" {
   description = "The AWS region to deploy to"
   type        = string
-  default     = "us-west-2"
+  default     = "eu-central-1"
 }
 
 variable "instance_type_app" {
@@ -11,7 +11,7 @@ variable "instance_type_app" {
 }
 
 variable "instance_type_db" {
-  description = "EC2 instance type for the Book DB"
+  description = "EC2 instance type for the citizens DB"
   type        = string
   default     = "t3.medium"
 }
@@ -31,7 +31,7 @@ variable "db_password" {
 variable "db_name" {
   description = "Name of the MySQL database"
   type        = string
-  default     = "books"
+  default     = "citizens"
 }
 
 variable "vpc_id" {
@@ -55,5 +55,5 @@ variable "key_name" {
 variable "jar_name" {
   description = "The name of the app jar file"
   type        = string
-  default     = "book-spring-0.1"
+  default     = "citizens-1.0"
 }

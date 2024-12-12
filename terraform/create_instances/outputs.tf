@@ -4,7 +4,7 @@ output "app_instance_ids" {
 }
 
 output "db_instance_id" {
-  description = "Instance ID for the Books DB"
+  description = "Instance ID for the citizens DB"
   value       = aws_instance.db.id
 }
 

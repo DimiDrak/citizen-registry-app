@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "db" {
-  ami           = "ami-0aff18ec83b712f05" # Ubuntu Server 24.04 LTS AMI
+  ami           = "ami-0a628e1e89aaedf80" # Ubuntu Server 24.04 LTS AMI
   instance_type = var.instance_type_db
   key_name      = var.key_name
   tags = {
@@ -22,7 +22,7 @@ resource "aws_instance" "db" {
               # Restart MySQL service
               sudo systemctl restart mysql
               
-              # create non-root user and Books db that this user has full access to
+              # create non-root user and citizens db that this user has full access to
               sudo mysql -u root -e "CREATE USER '${var.db_user}'@'%' IDENTIFIED BY '${var.db_password}';"
               sudo mysql -u root -e "CREATE DATABASE ${var.db_name};"
               sudo mysql -u root -e "GRANT ALL PRIVILEGES ON ${var.db_name}.* TO '${var.db_user}'@'%' WITH GRANT OPTION;"
@@ -44,7 +44,7 @@ resource "null_resource" "wait_for_db_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("C:/users/kiria/Desktop/cloud_test.pem")
+      private_key = file("/home/DimiDrak/cloud_test.pem")
       host        = aws_instance.db.public_ip
     }
   }
@@ -56,14 +56,14 @@ resource "aws_ami_from_instance" "db_ami" {
   source_instance_id = aws_instance.db.id
  
   tags = {
-    Name = "books-db-ami"
+    Name = "citizens-db-ami"
   }
 
   depends_on = [null_resource.wait_for_db_instance]
 }
 
 resource "aws_instance" "app" {
-  ami           = "ami-0aff18ec83b712f05"  # Ubuntu Server 24.04 LTS AMI
+  ami           = "ami-0a628e1e89aaedf80"  # Ubuntu Server 24.04 LTS AMI
   instance_type = var.instance_type_app
   key_name      = var.key_name
   tags = {
@@ -96,7 +96,7 @@ resource "null_resource" "wait_for_app_instance" {
     connection {
       type        = "ssh"
       user        = "ubuntu"
-      private_key = file("C:/users/kiria/Desktop/cloud_test.pem")
+      private_key = file("/home/DimiDrak/cloud_test.pem")
       host        = aws_instance.app.public_ip
     }
   }
@@ -107,7 +107,7 @@ resource "aws_ami_from_instance" "app_ami" {
   source_instance_id = aws_instance.app.id
   
   tags = {
-    Name = "book-app-ami"
+    Name = "citizens-app-ami"
   }
   
   depends_on = [null_resource.wait_for_app_instance]

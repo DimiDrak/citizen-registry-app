@@ -10,10 +10,10 @@
 	</parent>
 
 	<groupId>com.citizenRegistryExample</groupId>
-	<artifactId>citizenRegistryDemo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>citizens</artifactId>
+	<version>1.0</version>
 	<packaging>jar</packaging>
-	<name>citizenRegistryDemo</name>
+	<name>citizens</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

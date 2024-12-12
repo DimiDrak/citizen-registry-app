@@ -16,7 +16,7 @@ resource "aws_instance" "db" {
   key_name      = var.key_name
   vpc_security_group_ids = [aws_security_group.db_sg.id]
   tags = {
-    Name = "Book DB"
+    Name = "citizens DB"
   }
 
 }
@@ -41,7 +41,7 @@ resource "aws_instance" "app" {
               echo "User data script executed at $(date)" >> /var/log/user-data.log
               EOF
 
-  count = 2
+  count = 3
 }
 
 resource "aws_lb" "app_lb" {
@@ -59,7 +59,7 @@ resource "aws_lb_target_group" "app_tg" {
   vpc_id      = var.vpc_id
   target_type = "instance"
   health_check {
-    path                = "/api/books"
+    path                = "/api/citizens"
     interval            = 30
     timeout             = 5
     healthy_threshold   = 5
@@ -85,7 +85,7 @@ resource "aws_lb_target_group_attachment" "app_tg_attachment" {
   target_id        = aws_instance.app[count.index].id
   port             = 8080
 
-  count = 2
+  count = 3
 }
 
 resource "aws_security_group" "lb_sg" {

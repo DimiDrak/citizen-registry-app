@@ -1,7 +1,7 @@
 variable "region" {
   description = "The AWS region to deploy to"
   type        = string
-  default     = "us-west-2"
+  default     = "eu-central-1"
 }
 
 variable "instance_type_app" {
@@ -31,7 +31,7 @@ variable "db_password" {
 variable "spring_boot_app_git_repo" {
   description = "Git repository URL of the Spring Boot application"
   type        = string
-  default     = "https://github.com/kkritikos/book-full-spring.git"
+  default     = "https://github.com/DimiDrak/citizen-registry-app"
 }
 
 variable "git_repo_branch" {
@@ -43,7 +43,7 @@ variable "git_repo_branch" {
 variable "db_name" {
   description = "Name of the database"
   type        = string
-  default     = "books"
+  default     = "citizens"
 }
 
 variable "key_name" {
