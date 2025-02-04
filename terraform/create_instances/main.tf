@@ -36,7 +36,7 @@ resource "aws_instance" "app" {
               export DB_NAME=${var.db_name}
               export DB_USER=${var.db_user}
               export DB_PASSWORD=${var.db_password}
-              cd /home/ubuntu/app/book-spring
+              cd /home/ubuntu/app/citizen-spring
               nohup java -jar target/${var.jar_name}.jar > /var/log/spring-boot-app.log 2>&1 &
               echo "User data script executed at $(date)" >> /var/log/user-data.log
               EOF

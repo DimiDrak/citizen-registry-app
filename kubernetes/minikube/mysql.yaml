@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-ss
+  labels:
+    app: mysql 
+spec:
+  serviceName: "mysql"
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: mysql 
+  template: 
+    metadata:
+      labels:
+        app: mysql 
+    spec: 
+      containers:
+        - name: mysql 
+          image: mysql:8.3.0 
+          env:
+           - name: MYSQL_RANDOM_ROOT_PASSWORD
+             value: "yes"
+           - name: MYSQL_DATABASE
+             value: "citizens"
+           - name: MYSQL_USER
+             valueFrom:
+               secretKeyRef:
+                 name: user-secret
+                 key: username
+           - name: MYSQL_PASSWORD
+             valueFrom:
+               secretKeyRef:
+                 name: user-secret
+                 key: password
+          ports:
+            - containerPort: 3306 
+          volumeMounts: 
+            - name: mysql-vol
+              mountPath: /var/lib/mysql
+          resources:
+            requests:
+              memory: "2048Mi"
+              cpu: "1000m"
+            limits:
+              memory: "4096Mi"
+              cpu: "2000m"
+      volumes:
+        - name: mysql-vol
+          persistentVolumeClaim:
+            claimName: mysql-claim 

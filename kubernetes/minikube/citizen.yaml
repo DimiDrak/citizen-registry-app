@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: citizen 
+  labels:
+    app: citizen 
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: citizen
+  template: 
+    metadata:
+      labels:
+        app: citizen 
+    spec: 
+      containers:
+      - name: citizen 
+        image: madaoop/citizen-registry-app:v1 
+        ports:
+        - containerPort: 30000
+        env: 
+         - name: DB_USER
+           valueFrom:
+             secretKeyRef:
+               name: user-secret
+               key: username
+         - name: DB_PASSWORD
+           valueFrom:
+             secretKeyRef:
+               name: user-secret
+               key: password
+         - name: DB_HOST
+           value: "mysql"
+         - name: DB_NAME
+           value: "citizens"
+         - name: SERVER_PORT
+           value: "30000"
+        resources:
+            requests:
+                memory: "512Mi"
+                cpu: "500m"
+            limits:
+                memory: "1024Mi"
+                cpu: "2000m"
